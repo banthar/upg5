@@ -2,12 +2,13 @@ package com.github.banthar.upg5;
 
 import flash.display.Sprite;
 import flash.events.Event;
+import flash.events.KeyboardEvent;
 import flash.Lib;
 
 class Main extends Sprite {
 
 	var boardView:BoardView;
-	
+
 	public function new() {
 		super();	
 		var board = new Board(60, 60);
@@ -30,7 +31,12 @@ class Main extends Sprite {
 	function added(e) {
 		removeEventListener(Event.ADDED_TO_STAGE, added);
 		stage.addEventListener(Event.RESIZE, resize);
-		resize(null);
+		stage.addEventListener(KeyboardEvent.KEY_DOWN, function(e) {
+			boardView.board.player.onKeyDown(e.keyCode);
+		});
+		stage.addEventListener(KeyboardEvent.KEY_UP, function(e) {
+			boardView.board.player.onKeyUp(e.keyCode);
+		});		resize(null);
 	}
 	
 	public static function main() {

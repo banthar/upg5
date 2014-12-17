@@ -11,7 +11,7 @@ class BoardView extends Sprite {
 
 	var bitmap:Bitmap;
 	
-	var board:Board;
+	public var board:Board;
 	
 	var tiles:BitmapData;
 	

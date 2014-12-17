@@ -70,7 +70,6 @@ class Actor {
 	}
 	
 	public function tick(board:Board) {
-		this.velocity.x = 1.0;
 		this.velocity.y += 0.1;
 		
 		this.moveX(board);
