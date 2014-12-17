@@ -89,7 +89,8 @@ class Actor {
 	function collides(board:Board) {
 		for (x in Math.floor(this.position.x / board.tileSize.x) ... Math.ceil((this.position.x + this.size.x) / board.tileSize.x)) {
 			for (y in Math.floor(this.position.y / board.tileSize.y) ... Math.ceil((this.position.y + this.size.y) / board.tileSize.y)) {
-				if (board.get(x, y).isSolid()) {
+				var tile = board.get(x, y);
+				if (tile != null && tile.isSolid()) {
 					return true;
 				}
 			}			

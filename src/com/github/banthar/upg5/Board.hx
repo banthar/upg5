@@ -42,15 +42,20 @@ class Board {
 		actors.push(actor);
 	}
 
+	function isOutOfBounds(x, y) {
+		return (x < 0 || y < 0 || x >= width || y >= height);
+	}
+
 	function offset(x, y) {
-		if (x < 0 || y < 0 || x >= width || y >= height) {
-			throw new Error(x + ", " + y + " is out of bounds");
-		}
 		return x + y * width;
 	}
 	
 	public function get(x, y) {
-		return data[offset(x, y)];
+		if (isOutOfBounds(x, y)) {
+			return null;
+		} else {
+			return data[offset(x, y)];
+		}
 	}
 
 	public function getTileAt(x:Float, y:Float) {
