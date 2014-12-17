@@ -12,6 +12,10 @@ class Board {
 	
 	public var data:Vector<Tile>;
 	
+	public var actors:Array<Actor>;
+	
+	public var player:Player;
+	
 	public function new(width, height) {
 		this.width = width;
 		this.height = height;
@@ -19,8 +23,15 @@ class Board {
 		for (i in 0...data.length) {
 			data[i] = new Tile();
 		}
+		actors = new Array();
+		this.player = new Player();
+		addActor(player);
 	}
-	
+
+	public function addActor(actor) {
+		actors.push(actor);
+	}
+
 	function offset(x, y) {
 		if (x < 0 || y < 0 || x >= width || y >= height) {
 			throw new Error(x + ", " + y + " is out of bounds");
