@@ -10,6 +10,8 @@ class Actor {
 	
 	public var size:Point;
 	
+	var hitGround:Bool;
+	
 	public function new() {
 		this.position = new Point();
 		this.velocity = new Point();
@@ -59,6 +61,9 @@ class Actor {
 			this.position.y = nextY;
 			if (collides(board)) {
 				this.position.y = lastY;
+				if (this.velocity.y > 0.0) {
+					hitGround = true;
+				}
 				this.velocity.y = 0.0;
 				break;
 			}
@@ -71,7 +76,8 @@ class Actor {
 	
 	public function tick(board:Board) {
 		this.velocity.y += 0.1;
-		
+		hitGround = false;
+
 		this.moveX(board);
 		this.moveY(board);
 		
