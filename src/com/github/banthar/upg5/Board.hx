@@ -2,6 +2,7 @@ package com.github.banthar.upg5;
 import flash.display.DisplayObject;
 import flash.display.Sprite;
 import flash.errors.Error;
+import flash.geom.Point;
 import haxe.ds.Vector.Vector;
 
 class Board {
@@ -12,6 +13,8 @@ class Board {
 	
 	public var data:Vector<Tile>;
 	
+	public var tileSize:Point;
+	
 	public var actors:Array<Actor>;
 	
 	public var player:Player;
@@ -20,6 +23,7 @@ class Board {
 		this.width = width;
 		this.height = height;
 		this.data = new Vector(width * height);
+		this.tileSize =  new Point(16, 16);
 		for (i in 0...data.length) {
 			data[i] = new Tile();
 		}
@@ -28,6 +32,12 @@ class Board {
 		addActor(player);
 	}
 
+	public function tick() {
+		for (actor in actors) {
+			actor.tick(this);
+		}
+	}
+	
 	public function addActor(actor) {
 		actors.push(actor);
 	}
@@ -43,4 +53,8 @@ class Board {
 		return data[offset(x, y)];
 	}
 
+	public function getTileAt(x:Float, y:Float) {
+		return get(Math.floor(x / this.tileSize.x), Math.floor(y / this.tileSize.y));
+	}
+	
 }

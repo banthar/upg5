@@ -15,14 +15,11 @@ class BoardView extends Sprite {
 	
 	var tiles:BitmapData;
 	
-	var tileSize:Point;
-	
 	var offset:Point;
 	
 	public function new(board) {
 		super();
 		this.board = board;
-		this.tileSize =  new Point(16, 16);
 		this.tiles = Assets.getBitmapData("img/tiles.png");
 		this.bitmap = new Bitmap();
 		this.offset = new Point(0, 0);
@@ -37,8 +34,8 @@ class BoardView extends Sprite {
 	public function paint() {
 		var bitmapData = this.bitmap.bitmapData;
 		bitmapData.fillRect(new Rectangle(0, 0, bitmapData.width, bitmapData.height), 0x404040);
-
-		var tilePitch = tiles.width / this.tileSize.x;
+		var tileSize = this.board.tileSize;
+		var tilePitch = tiles.width / tileSize.x;
 
 		var offsetX = clamp(offset.x, 0, board.width * tileSize.x - bitmapData.width);
 		var left = Math.floor(offsetX / tileSize.x);

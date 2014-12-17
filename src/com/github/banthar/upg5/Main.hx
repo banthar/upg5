@@ -15,6 +15,7 @@ class Main extends Sprite {
 		addEventListener(Event.ADDED_TO_STAGE, added);
 		addChild(boardView);
 		addEventListener(Event.ENTER_FRAME, function(_) {
+				board.tick();
 				boardView.paint();
 			});
 	}
