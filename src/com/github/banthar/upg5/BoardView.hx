@@ -53,7 +53,7 @@ class BoardView extends Sprite {
 				var tile = board.get(x,y);
 				var tileId = tile.getId();
 				var src = new Rectangle(tileId%tilePitch*tileSize.x, Std.int(tileId/tilePitch)*tileSize.x, tileSize.x, tileSize.y);
-				var dst = new Point(x * tileSize.x, y * tileSize.y).subtract(offset);
+				var dst = new Point(x * tileSize.x - offsetX, y * tileSize.y - offsetY);
 				bitmapData.copyPixels(tiles, src, dst);
 			}
 		}
