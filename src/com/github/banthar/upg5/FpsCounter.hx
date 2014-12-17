@@ -18,7 +18,7 @@ class FpsCounter extends TextField {
 		var currentTick = Lib.getTimer();
 		var frameTicks = (currentTick - lastTick);
 		this.text = frameTicks + "ms";
-		if (frameTicks > 1000/stage.frameRate) {
+		if (frameTicks > 1000/(stage.frameRate-1)) {
 			this.textColor = 0xff0000;
 		} else {
 			this.textColor = 0x00ff00;

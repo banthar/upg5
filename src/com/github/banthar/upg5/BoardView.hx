@@ -4,6 +4,7 @@ import flash.display.BitmapData;
 import flash.display.Sprite;
 import flash.geom.Point;
 import flash.geom.Rectangle;
+import flash.Lib;
 import openfl.Assets;
 
 class BoardView extends Sprite {
@@ -36,17 +37,30 @@ class BoardView extends Sprite {
 	public function paint() {
 		var bitmapData = this.bitmap.bitmapData;
 		bitmapData.fillRect(new Rectangle(0, 0, bitmapData.width, bitmapData.height), 0x404040);
+
 		var tilePitch = tiles.width / this.tileSize.x;
-		for (i in 0...board.data.length) {
-			var tile = board.data[i];
-			var tileId = tile.getId();
-			var src = new Rectangle(tileId%tilePitch*tileSize.x, Std.int(tileId/tilePitch)*tileSize.x, tileSize.x, tileSize.y);
-			var dst = new Point(i % board.width * tileSize.x, Std.int(i / board.width) * tileSize.y).subtract(offset);
-			bitmapData.copyPixels(tiles, src, dst);
+
+		var offsetX = clamp(offset.x, 0, board.width * tileSize.x - bitmapData.width);
+		var left = Math.floor(offsetX / tileSize.x);
+		var right = Math.ceil((offsetX + bitmapData.width) / tileSize.x);
+		
+		var offsetY = clamp(offset.y, 0, board.height * tileSize.y - bitmapData.height);
+		var top = Math.floor(offsetY / tileSize.y);
+		var bottom = Math.ceil((offsetY + bitmapData.height) / tileSize.y);
+		
+		for(y in top...bottom){
+			for (x in left...right) {
+				var tile = board.get(x,y);
+				var tileId = tile.getId();
+				var src = new Rectangle(tileId%tilePitch*tileSize.x, Std.int(tileId/tilePitch)*tileSize.x, tileSize.x, tileSize.y);
+				var dst = new Point(x * tileSize.x, y * tileSize.y).subtract(offset);
+				bitmapData.copyPixels(tiles, src, dst);
+			}
 		}
-		
-		offset.x += 1;
-		
+	}
+	
+	function clamp(x, min, max) {
+		return Math.min(max, Math.max(x, min));
 	}
 	
 }

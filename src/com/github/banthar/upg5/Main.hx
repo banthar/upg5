@@ -10,7 +10,7 @@ class Main extends Sprite {
 	
 	public function new() {
 		super();	
-		var board = new Board(32, 32);
+		var board = new Board(60, 60);
 		this.boardView = new BoardView(board);
 		addEventListener(Event.ADDED_TO_STAGE, added);
 		addChild(boardView);
