@@ -3,7 +3,13 @@ import flash.display.DisplayObject;
 import flash.display.Sprite;
 import flash.errors.Error;
 import flash.geom.Point;
+import flash.utils.Endian;
+import haxe.crypto.BaseCode;
 import haxe.ds.Vector.Vector;
+import haxe.io.Bytes;
+import haxe.io.BytesData;
+import haxe.xml.Parser;
+import openfl.Assets;
 
 class Board {
 
@@ -19,19 +25,18 @@ class Board {
 	
 	public var player:Player;
 	
-	public function new(width, height) {
+	public function new(width, height, bytes:BytesData) {
 		this.width = width;
 		this.height = height;
 		this.data = new Vector(width * height);
 		this.tileSize =  new Point(16, 16);
+		bytes.endian = Endian.LITTLE_ENDIAN;
 		for (i in 0...data.length) {
-			data[i] = new Tile();
+			data[i] = new Tile(bytes.readInt());
 		}
 		actors = new Array();
-		this.player = new Player();
-		addActor(player);
 	}
-
+	
 	public function tick() {
 		for (actor in actors) {
 			actor.tick(this);
@@ -39,6 +44,9 @@ class Board {
 	}
 	
 	public function addActor(actor) {
+		if (Std.is(actor, Player)) {
+			player = actor;
+		}
 		actors.push(actor);
 	}
 
@@ -62,4 +70,25 @@ class Board {
 		return get(Math.floor(x / this.tileSize.x), Math.floor(y / this.tileSize.y));
 	}
 	
+	static function decode(base64:String) {
+		var length = base64.indexOf('=');
+		var stripped = base64.substr(0, length);
+		var base = Bytes.ofString("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/");
+		return new BaseCode(base).decodeBytes(Bytes.ofString(stripped));
+	}
+	
+	public static function loadFrom(xml:String) {
+		var map = Xml.parse(xml).elementsNamed("map").next();
+		var layer = map.elementsNamed("layer").next();
+		var width = Std.parseInt(layer.get("width"));
+		var height = Std.parseInt(layer.get("height"));
+		var data = decode(StringTools.trim(layer.elementsNamed("data").next().firstChild().nodeValue));
+		var board = new Board(width, height, data.getData());
+		var objectGroup = map.elementsNamed("objectgroup").next();
+		for ( object in objectGroup.elements()) {
+			var actor = Actor.loadFrom(object);
+			board.addActor(actor);
+		}
+		return board;
+	}
 }

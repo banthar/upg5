@@ -14,7 +14,7 @@ class Player extends Actor {
 
 	public function new() {
 		super();
-		this.position = new Point(100, 100);
+		this.position = new Point(50, 50);
 		this.size = new Point(13 , 25);
 	}
 	
@@ -40,7 +40,6 @@ class Player extends Actor {
 		if (jumpPressed && hitGround) {
 			this.velocity.y = -4.0;
 		}
-		
 		super.tick(board);
 	}
 	

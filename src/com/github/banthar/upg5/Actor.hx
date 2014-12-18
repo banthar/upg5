@@ -109,4 +109,12 @@ class Actor {
 	public function getUV() {
 		return new Rectangle();
 	}
+	
+	public static function loadFrom(xml:Xml) {
+		var actor = new Player();
+		//actor.position.x = Std.parseFloat(xml.get("x"));
+		//actor.position.y = Std.parseFloat(xml.get("y"));
+		return actor;
+	}
+	
 }

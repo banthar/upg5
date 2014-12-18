@@ -4,14 +4,12 @@ class Tile {
 
 	var id:Int;
 	
-	public function new() {
-		if(Math.random()>0.85) {
-			id = Math.floor(Math.random() * 4);
-		}
+	public function new(id) {
+		this.id = id;
 	}
 	
 	public function getId() {
-		return this.id;
+		return this.id - 1;
 	}
 	
 	public function isSolid() {
