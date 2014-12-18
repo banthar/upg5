@@ -6,6 +6,7 @@ import flash.geom.Point;
 import flash.geom.Rectangle;
 import flash.Lib;
 import openfl.Assets;
+using com.github.banthar.upg5.PointUtils;
 
 class BoardView extends Sprite {
 
@@ -29,6 +30,15 @@ class BoardView extends Sprite {
 	public function init(width, height) {
 		this.bitmap.bitmapData = new BitmapData(width, height, false, 0);
 		paint();
+	}
+	
+	public function tick() {
+		var screenSize = new Point(bitmap.width, bitmap.height);
+		var center = this.board.player.getCenter();
+		var target = center.subtract(screenSize.multiply(0.5));
+		if (Point.distance(offset, target) > 100.0) {
+			this.offset = PointUtils.mix(this.offset, target, 0.9);
+		}
 	}
 	
 	public function paint() {
@@ -56,7 +66,7 @@ class BoardView extends Sprite {
 		}
 		
 		for (actor in this.board.actors) {
-			bitmapData.copyPixels(this.tiles, actor.getUV(), actor.position);
+			bitmapData.copyPixels(this.tiles, actor.getUV(), actor.position.subtract(new Point(offsetX, offsetY)));
 		}
 	}
 	

@@ -80,10 +80,6 @@ class Actor {
 
 		this.moveX(board);
 		this.moveY(board);
-		
-		if (this.position.x > 800) {
-			this.position.x = 0;
-		}
 	}
 	
 	function collides(board:Board) {
@@ -112,8 +108,8 @@ class Actor {
 	
 	public static function loadFrom(xml:Xml) {
 		var actor = new Player();
-		//actor.position.x = Std.parseFloat(xml.get("x"));
-		//actor.position.y = Std.parseFloat(xml.get("y"));
+		actor.position.x = Std.parseFloat(xml.get("x"));
+		actor.position.y = Std.parseFloat(xml.get("y"));
 		return actor;
 	}
 	

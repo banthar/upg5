@@ -3,6 +3,7 @@ import com.github.banthar.upg5.Board;
 import flash.events.KeyboardEvent;
 import flash.geom.Point;
 import flash.geom.Rectangle;
+using com.github.banthar.upg5.PointUtils;
 
 class Player extends Actor {
 
@@ -53,4 +54,9 @@ class Player extends Actor {
 				rightPressed = false;
 		}
 	}
+	
+	public function getCenter() {
+		return this.position.add(this.size.multiply(0.5));
+	}
+	
 }
