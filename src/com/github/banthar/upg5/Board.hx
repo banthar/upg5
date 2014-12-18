@@ -8,6 +8,8 @@ import haxe.crypto.BaseCode;
 import haxe.ds.Vector.Vector;
 import haxe.io.Bytes;
 import haxe.io.BytesData;
+import haxe.io.BytesInput;
+import haxe.io.Input;
 import haxe.xml.Parser;
 import openfl.Assets;
 
@@ -25,14 +27,14 @@ class Board {
 	
 	public var player:Player;
 	
-	public function new(width, height, bytes:BytesData) {
+	public function new(width, height, bytes:Input) {
 		this.width = width;
 		this.height = height;
 		this.data = new Vector(width * height);
 		this.tileSize =  new Point(16, 16);
-		bytes.endian = Endian.LITTLE_ENDIAN;
+		bytes.bigEndian = false;
 		for (i in 0...data.length) {
-			data[i] = new Tile(bytes.readInt());
+			data[i] = new Tile(bytes.readInt32());
 		}
 		actors = new Array();
 	}
@@ -83,7 +85,7 @@ class Board {
 		var width = Std.parseInt(layer.get("width"));
 		var height = Std.parseInt(layer.get("height"));
 		var data = decode(StringTools.trim(layer.elementsNamed("data").next().firstChild().nodeValue));
-		var board = new Board(width, height, data.getData());
+		var board = new Board(width, height, new BytesInput(data));
 		var objectGroup = map.elementsNamed("objectgroup").next();
 		for ( object in objectGroup.elements()) {
 			var actor = Actor.loadFrom(object);
