@@ -13,14 +13,32 @@ class Player extends Actor {
 
 	var jumpPressed:Bool;
 
+	var frame:Int;
+	
 	public function new() {
 		super();
 		this.position = new Point(50, 50);
 		this.size = new Point(13 , 25);
+		this.frame = 0;
+	}
+	
+	function getFrameId() {
+		var n = Math.floor(frame / 8);
+		if (this.velocity.x > 0) {
+			return 6 + n%4;
+		}
+		else if (this.velocity.x < 0) {
+			return 10 + n%4;
+        } else {
+			return 0;
+		}
 	}
 	
 	override function getUV() {
-		return new Rectangle(0, 64, size.x, size.y);
+		if(this.hitGround) {
+			frame++;
+		}
+		return new Rectangle(0 + getFrameId() * 13, 64, size.x, size.y);
 	}
 	
 	public function onKeyDown(keyCode) {
