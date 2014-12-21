@@ -34,7 +34,7 @@ class Board {
 		this.tileSize =  new Point(16, 16);
 		bytes.bigEndian = false;
 		for (i in 0...data.length) {
-			data[i] = new Tile(bytes.readInt32());
+			data[i] = Tile.fromId(bytes.readInt32());
 		}
 		actors = new Array();
 	}
@@ -68,6 +68,14 @@ class Board {
 		}
 	}
 
+	public function set(x, y, tile) {
+		if (isOutOfBounds(x, y)) {
+			throw "Index out of bounds: " + x + ", " + y;
+		} else {
+			data[offset(x, y)] = tile;
+		}
+	}
+	
 	public function getTileAt(x:Float, y:Float) {
 		return get(Math.floor(x / this.tileSize.x), Math.floor(y / this.tileSize.y));
 	}

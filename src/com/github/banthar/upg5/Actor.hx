@@ -1,6 +1,7 @@
 package com.github.banthar.upg5;
 import flash.geom.Point;
 import flash.geom.Rectangle;
+using com.github.banthar.upg5.PointUtils;
 
 class Actor {
 
@@ -17,88 +18,59 @@ class Actor {
 		this.velocity = new Point();
 	}
 	
-	public function moveX(board:Board) {
-		var stepX = board.tileSize.x;
-		var signX = sign(this.velocity.x);
-		var nextX = if( signX > 0.0 ) {
-				Math.ceil((this.position.x + this.size.x) / stepX) * stepX - this.size.x;
-			} else {
-				Math.floor(this.position.x / stepX) * stepX;
+	public function move(board:Board, u:Int) {
+		var v = 1 - u;
+		var stepU = board.tileSize.get(u);
+		var stepV = board.tileSize.get(v);
+
+		var velocity = this.velocity.get(u) / stepU;
+		var direction = sign(velocity);
+		var offset = direction > 0 ? this.size.get(u) : 0.0;
+		var position = (this.position.get(u) + offset) / stepU;
+		
+		var start = round(position, direction);
+		var stop = round(position + velocity, direction);
+		
+		var startV = Math.floor(this.position.get(v) / stepV);
+		var endV = Math.ceil((this.position.get(v) + this.size.get(v)) / stepV);
+
+		var i = start;
+		while (i != stop) { 
+			for (j in startV...endV) {
+				var p = i + (direction == 1?0:-1);
+				var x = u * j + v * p;
+				var y = u * p + v * j;
+				if (board.get(x, y).isSolid(direction * v, direction * u)) {
+					this.position.set(u, i * stepU - offset);
+					this.velocity.set(u, 0);
+					if( u == 1 && direction == 1 ) {
+						this.hitGround = true;
+					}
+					return;
+				}
 			}
-		var endX = this.position.x + this.velocity.x;
-		while (true) {
-			if (nextX * signX >= endX * signX) {
-				nextX = endX;
-			}
-			var lastX = this.position.x;
-			this.position.x = nextX;
-			if (collides(board)) {
-				this.position.x = lastX;
-				this.velocity.x = 0.0;
-				break;
-			}
-			if (nextX == endX) {
-				break;
-			}
-			nextX += stepX * signX;
+			i += direction;
 		}
+		this.position.set(u, this.position.get(u) + this.velocity.get(u));
 	}
 	
-	public function moveY(board:Board) {
-		var stepY = board.tileSize.y;
-		var signY = sign(this.velocity.y);
-		var nextY = if( signY > 0.0 ) {
-				Math.ceil((this.position.y + this.size.y) / stepY) * stepY - this.size.y;
-			} else {
-				Math.floor(this.position.y / stepY) * stepY;
-			}
-		var endY = this.position.y + this.velocity.y;
-		while (true) {
-			if (nextY * signY >= endY * signY) {
-				nextY = endY;
-			}
-			var lastY = this.position.y;
-			this.position.y = nextY;
-			if (collides(board)) {
-				this.position.y = lastY;
-				if (this.velocity.y > 0.0) {
-					hitGround = true;
-				}
-				this.velocity.y = 0.0;
-				break;
-			}
-			if (nextY == endY) {
-				break;
-			}
-			nextY += stepY * signY;
+	function round(x:Float, direction:Int) {
+		return Math.ceil(x * direction) * direction;
+	}
+	
+	function sign(x:Float) {
+		if (x >= 0) {
+			return 1;
+		} else {
+			return -1;
 		}
 	}
 	
 	public function tick(board:Board) {
 		this.velocity.y += 0.1;
 		hitGround = false;
-
-		this.moveX(board);
-		this.moveY(board);
-	}
-	
-	function collides(board:Board) {
-		for (x in Math.floor(this.position.x / board.tileSize.x) ... Math.ceil((this.position.x + this.size.x) / board.tileSize.x)) {
-			for (y in Math.floor(this.position.y / board.tileSize.y) ... Math.ceil((this.position.y + this.size.y) / board.tileSize.y)) {
-				var tile = board.get(x, y);
-				if (tile != null && tile.isSolid()) {
-					return true;
-				}
-			}			
-		}
-		return false;
-	}
-	
-	function sign(x) {
-		if (x < 0.0) {
-			return -1.0;
-		} else {
-			return 1.0;
+		for(d in 0...2) {
+			this.move(board, d);
 		}
 	}
 	

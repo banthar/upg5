@@ -35,10 +35,7 @@ class BoardView extends Sprite {
 	public function tick() {
 		var screenSize = new Point(bitmap.width, bitmap.height);
 		var center = this.board.player.getCenter();
-		var target = center.subtract(screenSize.multiply(0.5));
-		if (Point.distance(offset, target) > 100.0) {
-			this.offset = PointUtils.mix(this.offset, target, 0.9);
-		}
+		this.offset = center.subtract(screenSize.multiply(0.5));
 	}
 	
 	public function paint() {
