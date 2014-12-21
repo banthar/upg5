@@ -63,7 +63,7 @@ class BoardView extends Sprite {
 		}
 		
 		for (actor in this.board.actors) {
-			bitmapData.copyPixels(this.tiles, actor.getUV(), actor.position.subtract(new Point(offsetX, offsetY)));
+			bitmapData.copyPixels(this.tiles, actor.getUV(board), actor.getXY(board).subtract(new Point(offsetX, offsetY)));
 		}
 	}
 	

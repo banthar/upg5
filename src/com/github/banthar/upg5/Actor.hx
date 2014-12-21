@@ -11,11 +11,14 @@ class Actor {
 	
 	public var size:Point;
 	
+	public var destroyed:Bool;
+	
 	var hitGround:Bool;
 	
-	public function new() {
-		this.position = new Point();
+	public function new(position:Point) {
+		this.position = position;
 		this.velocity = new Point();
+		this.destroyed = false;
 	}
 	
 	public function move(board:Board, u:Int) {
@@ -67,22 +70,43 @@ class Actor {
 	}
 	
 	public function tick(board:Board) {
-		this.velocity.y += 0.1;
+		this.velocity.y += 0.2;
 		hitGround = false;
 		for(d in 0...2) {
 			this.move(board, d);
 		}
 	}
 	
-	public function getUV() {
+	public function getUV(board:Board) {
 		return new Rectangle();
 	}
 	
+	public function getXY(board:Board) {
+		return position;
+	}
+	
+	public function getBounds() {
+		return new Rectangle(this.position.x, this.position.y, this.size.x, this.size.y);
+	}
+	
+	static function createActor(type, position):Actor {
+		switch( type ) {
+			case "Player":
+				return new Player(position);
+			case "Upgrade":
+				return new Upgrade(position);
+		}
+		throw "Unknown object type: " + type;
+	}
+	
 	public static function loadFrom(xml:Xml) {
-		var actor = new Player();
-		actor.position.x = Std.parseFloat(xml.get("x"));
-		actor.position.y = Std.parseFloat(xml.get("y"));
+		var position = new Point(Std.parseFloat(xml.get("x")), Std.parseFloat(xml.get("y")));
+		var actor = createActor(xml.get("type"), position);
 		return actor;
+	}
+	
+	public function destroy() {
+		this.destroyed = true;
 	}
 	
 }

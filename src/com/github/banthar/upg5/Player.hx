@@ -15,9 +15,8 @@ class Player extends Actor {
 
 	var frame:Int;
 	
-	public function new() {
-		super();
-		this.position = new Point(50, 50);
+	public function new(position:Point) {
+		super(position);
 		this.size = new Point(13 , 25);
 		this.frame = 0;
 	}
@@ -34,10 +33,7 @@ class Player extends Actor {
 		}
 	}
 	
-	override function getUV() {
-		if(this.hitGround) {
-			frame++;
-		}
+	override function getUV(board:Board) {
 		return new Rectangle(0 + getFrameId() * 13, 64, size.x, size.y);
 	}
 	
@@ -54,10 +50,12 @@ class Player extends Actor {
 	
 	override function tick(board:Board) {
 		var v = (leftPressed?-1.0:0.0) + (rightPressed?1.0:0.0);
-		this.velocity.x = v;
-		
+		this.velocity.x = v * 1.5;
+		if(this.hitGround) {
+			frame++;
+		}
 		if (jumpPressed && hitGround) {
-			this.velocity.y = -4.0;
+			this.velocity.y = -5.5;
 		}
 		super.tick(board);
 	}

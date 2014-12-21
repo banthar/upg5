@@ -27,6 +27,8 @@ class Board {
 	
 	public var player:Player;
 	
+	public var frame:Int;
+	
 	public function new(width, height, bytes:Input) {
 		this.width = width;
 		this.height = height;
@@ -37,17 +39,20 @@ class Board {
 			data[i] = Tile.fromId(bytes.readInt32());
 		}
 		actors = new Array();
+		frame = 0;
 	}
 	
 	public function tick() {
 		for (actor in actors) {
 			actor.tick(this);
 		}
+		actors = actors.filter(function(actor) { return !actor.destroyed; } );
+		frame++;
 	}
 	
 	public function addActor(actor) {
 		if (Std.is(actor, Player)) {
-			player = actor;
+			player = cast(actor);
 		}
 		actors.push(actor);
 	}
