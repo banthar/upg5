@@ -4,9 +4,12 @@ import flash.geom.Point;
 
 class Upgrade extends Actor {
 
-	public function new(position:Point) {
+	var type:String;
+	
+	public function new(position:Point, type:String) {
 		super(position);
 		this.size = new Point(16, 16);
+		this.type = type;
 	}
 	
 	override function getUV(board:Board) {
@@ -19,7 +22,7 @@ class Upgrade extends Actor {
 	
 	override function tick(board:Board) {
 		if (this.getBounds().intersects(board.player.getBounds())) {
-			trace("collected: " + this);
+			trace("collected: " + this.type);
 			destroy();
 		}
 	}

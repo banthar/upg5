@@ -10,6 +10,10 @@
  </layer>
  <objectgroup name="Object Layer 1">
   <object id="1" type="Player" x="192" y="1504" width="13" height="25"/>
-  <object id="8" type="Upgrade" x="32" y="1552" width="16" height="16"/>
+  <object id="8" type="Upgrade" x="32" y="1552" width="16" height="16">
+   <properties>
+    <property name="upgrade" value="left"/>
+   </properties>
+  </object>
  </objectgroup>
 </map>

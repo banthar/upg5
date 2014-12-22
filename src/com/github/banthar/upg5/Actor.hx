@@ -1,6 +1,9 @@
 package com.github.banthar.upg5;
 import flash.geom.Point;
 import flash.geom.Rectangle;
+import haxe.ds.HashMap;
+import haxe.ds.StringMap;
+import openfl.utils.Dictionary;
 using com.github.banthar.upg5.PointUtils;
 
 class Actor {
@@ -89,19 +92,25 @@ class Actor {
 		return new Rectangle(this.position.x, this.position.y, this.size.x, this.size.y);
 	}
 	
-	static function createActor(type, position):Actor {
+	static function createActor(type, position, properties):Actor {
 		switch( type ) {
 			case "Player":
 				return new Player(position);
 			case "Upgrade":
-				return new Upgrade(position);
+				return new Upgrade(position, properties.get("upgrade"));
 		}
 		throw "Unknown object type: " + type;
 	}
 	
 	public static function loadFrom(xml:Xml) {
 		var position = new Point(Std.parseFloat(xml.get("x")), Std.parseFloat(xml.get("y")));
-		var actor = createActor(xml.get("type"), position);
+		var map = new StringMap();
+		for (properties in xml.elementsNamed("properties")) {
+			for (property in properties.elementsNamed("property")) {
+					map.set(property.get("name"), property.get("value"));
+			}
+		}
+		var actor = createActor(xml.get("type"), position, map);
 		return actor;
 	}
 	
