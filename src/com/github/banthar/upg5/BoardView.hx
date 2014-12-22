@@ -46,27 +46,19 @@ class BoardView extends Sprite {
 		var center = this.board.player.getCenter();
 		var screenCenter = new Point(this.offset.x + screenSize.x / 2, this.offset.y + screenSize.y / 2);
 		
-		if (Point.distance(screenCenter, center) > 100) {
+		if (center.subtract(screenCenter).divide(screenSize).length > 0.5) {
 			shouldScroll = true;
 		}
-		if (Point.distance(screenCenter, center) < 10) {
-			shouldScroll = false;
-		}
 		if (shouldScroll) {
-			
-			var x : Int = Std.int(this.offset.x - (center.x - screenSize.x * .5));
-			var y : Int = Std.int(this.offset.y - (center.y - screenSize.y * .5));
-			
-			if (Math.abs(x) >= 6) {
-				this.offset.x -= sign(x) * 6;	
+			var target = center.subtract(screenSize.multiply(0.5));
+			var v = target.subtract(offset);
+			var scrollSpeed = 6.0;
+			if (v.length >= scrollSpeed) {
+				v.normalize(scrollSpeed);
+				this.offset = this.offset.add(v);
 			} else {
-				this.offset.x = center.x - screenSize.x * .5;
-			}
-			
-			if (Math.abs(y) >= 6) {
-				this.offset.y -= sign(y) * 6;
-			} else {
-				this.offset.y = center.y - screenSize.y * .5;
+				this.offset = target;
+				shouldScroll = false;
 			}
 		}
 	}

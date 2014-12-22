@@ -12,6 +12,10 @@ class PointUtils {
 		return new Point(p0.x*b + p1.x*a, p0.y*b + p1.y*a);
 	}
 	
+	public static function divide(p0:Point, p1:Point)	{
+		return new Point(p0.x/p1.x, p0.y/p1.y);
+	}
+	
 	public static function get(p:Point, d:Int) {
 		if (d == 0) {
 			return p.x;
