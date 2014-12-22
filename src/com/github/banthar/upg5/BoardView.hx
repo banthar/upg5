@@ -18,6 +18,9 @@ class BoardView extends Sprite {
 	
 	var offset:Point;
 	
+	var shouldScroll : Bool = false;
+
+	
 	public function new(board) {
 		super();
 		this.board = board;
@@ -32,10 +35,40 @@ class BoardView extends Sprite {
 		paint();
 	}
 	
+	function sign(n : Float) {
+		if (n > 0) return 1;
+		if (n < 0) return -1
+		else return 0;
+	}
+	
 	public function tick() {
 		var screenSize = new Point(bitmap.width, bitmap.height);
 		var center = this.board.player.getCenter();
-		this.offset = center.subtract(screenSize.multiply(0.5));
+		var screenCenter = new Point(this.offset.x + screenSize.x / 2, this.offset.y + screenSize.y / 2);
+		
+		if (Point.distance(screenCenter, center) > 100) {
+			shouldScroll = true;
+		}
+		if (Point.distance(screenCenter, center) < 10) {
+			shouldScroll = false;
+		}
+		if (shouldScroll) {
+			
+			var x : Int = Std.int(this.offset.x - (center.x - screenSize.x * .5));
+			var y : Int = Std.int(this.offset.y - (center.y - screenSize.y * .5));
+			
+			if (Math.abs(x) >= 6) {
+				this.offset.x -= sign(x) * 6;	
+			} else {
+				this.offset.x = center.x - screenSize.x * .5;
+			}
+			
+			if (Math.abs(y) >= 6) {
+				this.offset.y -= sign(y) * 6;
+			} else {
+				this.offset.y = center.y - screenSize.y * .5;
+			}
+		}
 	}
 	
 	public function paint() {
