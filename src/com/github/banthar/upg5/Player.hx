@@ -5,7 +5,7 @@ import flash.geom.Point;
 import flash.geom.Rectangle;
 using com.github.banthar.upg5.PointUtils;
 
-class Player extends Actor {
+class Player extends Mobile {
 
 	var jumpLevel:Int = 1;
 	
