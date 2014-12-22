@@ -11,9 +11,11 @@ class Upgrade extends Collectible {
 		this.type = type;
 	}
 	
-	override function getUv(board:Board) {
-		return new Rectangle(0, 48, 16, 16);
+	override function getFrame(board:Board) {
+		return 0;
 	}
-
 	
+	override function getTileOffset() {
+		return new Point(0, 48);
+	}
 }
