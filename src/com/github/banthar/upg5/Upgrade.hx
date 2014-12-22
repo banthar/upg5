@@ -1,6 +1,6 @@
 package com.github.banthar.upg5;
-import flash.geom.Rectangle;
-import flash.geom.Point;
+import openfl.geom.Rectangle;
+import openfl.geom.Point;
 
 class Upgrade extends Collectible {
 

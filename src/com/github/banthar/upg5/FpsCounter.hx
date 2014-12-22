@@ -1,8 +1,8 @@
 package com.github.banthar.upg5;
-import flash.display.Sprite;
-import flash.events.Event;
-import flash.Lib;
-import flash.text.TextField;
+import openfl.display.Sprite;
+import openfl.events.Event;
+import openfl.Lib;
+import openfl.text.TextField;
 
 
 class FpsCounter extends TextField {

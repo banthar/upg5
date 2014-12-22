@@ -1,9 +1,9 @@
 package com.github.banthar.upg5;
 
-import flash.display.Sprite;
-import flash.events.Event;
-import flash.events.KeyboardEvent;
-import flash.Lib;
+import openfl.display.Sprite;
+import openfl.events.Event;
+import openfl.events.KeyboardEvent;
+import openfl.Lib;
 import openfl.Assets;
 
 class Main extends Sprite {
@@ -42,8 +42,8 @@ class Main extends Sprite {
 	}
 	
 	public static function main() {
-		Lib.current.stage.align = flash.display.StageAlign.TOP_LEFT;
-		Lib.current.stage.scaleMode = flash.display.StageScaleMode.NO_SCALE;
+		Lib.current.stage.align = openfl.display.StageAlign.TOP_LEFT;
+		Lib.current.stage.scaleMode = openfl.display.StageScaleMode.NO_SCALE;
 		Lib.current.addChild(new Main());
 		Lib.current.addChild(new FpsCounter());
 	}

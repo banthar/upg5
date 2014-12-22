@@ -1,9 +1,9 @@
 package com.github.banthar.upg5;
-import flash.display.DisplayObject;
-import flash.display.Sprite;
-import flash.errors.Error;
-import flash.geom.Point;
-import flash.utils.Endian;
+import openfl.display.DisplayObject;
+import openfl.display.Sprite;
+import openfl.errors.Error;
+import openfl.geom.Point;
+import openfl.utils.Endian;
 import haxe.crypto.BaseCode;
 import haxe.ds.Vector.Vector;
 import haxe.io.Bytes;

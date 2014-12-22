@@ -1,7 +1,7 @@
 package com.github.banthar.upg5;
 
 using com.github.banthar.upg5.PointUtils;
-import flash.geom.Point;
+import openfl.geom.Point;
 
 /**
  * ...
