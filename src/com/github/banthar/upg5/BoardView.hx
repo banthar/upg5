@@ -46,13 +46,13 @@ class BoardView extends Sprite {
 		var center = this.board.player.getCenter();
 		var screenCenter = new Point(this.offset.x + screenSize.x / 2, this.offset.y + screenSize.y / 2);
 		
-		if (center.subtract(screenCenter).divide(screenSize).length > 0.5) {
+		if (center.subtract(screenCenter).divide(screenSize).length > 0.5 * 0.8) {
 			shouldScroll = true;
 		}
 		if (shouldScroll) {
 			var target = center.subtract(screenSize.multiply(0.5));
 			var v = target.subtract(offset);
-			var scrollSpeed = 6.0;
+			var scrollSpeed = 8.0;
 			if (v.length >= scrollSpeed) {
 				v.normalize(scrollSpeed);
 				this.offset = this.offset.add(v);
