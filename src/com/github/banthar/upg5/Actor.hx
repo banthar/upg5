@@ -98,6 +98,8 @@ class Actor {
 				return new Player(position);
 			case "Upgrade":
 				return new Upgrade(position, properties.get("upgrade"));
+			case "Diamond":
+				return new Diamond(position);
 		}
 		throw "Unknown object type: " + type;
 	}
