@@ -13,10 +13,11 @@ class Player extends Actor {
 
 	var rightPressed:Bool;
 	
-	var jumpPressed:Bool;
 	var jumpsLeft:Int;
 	
 	var frame:Int;
+	
+	var sliding : Bool;
 	
 	public function new(position:Point) {
 		super(position);
@@ -52,8 +53,8 @@ class Player extends Actor {
 	}
 	
 	function jump() {
-		if (!jumpPressed && jumpsLeft > 0) {
-			jumpPressed = true;
+		trace(jumpsLeft);
+		if (jumpsLeft > 0) {
 			jumpsLeft--;
 			this.velocity.y = -5.5;
 		}
@@ -73,8 +74,6 @@ class Player extends Actor {
 		switch(keyCode) {
 			case 37,65:
 				leftPressed = false;
-			case 38,87:
-				jumpPressed = false;
 			case 39,68:
 				rightPressed = false;
 		}
