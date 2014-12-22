@@ -1,6 +1,6 @@
 package com.github.banthar.upg5;
-import flash.geom.Point;
-import flash.geom.Rectangle;
+import openfl.geom.Point;
+import openfl.geom.Rectangle;
 import haxe.ds.HashMap;
 import haxe.ds.StringMap;
 import openfl.utils.Dictionary;

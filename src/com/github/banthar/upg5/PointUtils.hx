@@ -1,5 +1,5 @@
 package com.github.banthar.upg5;
-import flash.geom.Point;
+import openfl.geom.Point;
 
 class PointUtils {
 

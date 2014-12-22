@@ -1,10 +1,10 @@
 package com.github.banthar.upg5;
-import flash.display.Bitmap;
-import flash.display.BitmapData;
-import flash.display.Sprite;
-import flash.geom.Point;
-import flash.geom.Rectangle;
-import flash.Lib;
+import openfl.display.Bitmap;
+import openfl.display.BitmapData;
+import openfl.display.Sprite;
+import openfl.geom.Point;
+import openfl.geom.Rectangle;
+import openfl.Lib;
 import openfl.Assets;
 using com.github.banthar.upg5.PointUtils;
 

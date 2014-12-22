@@ -1,8 +1,8 @@
 package com.github.banthar.upg5;
 import com.github.banthar.upg5.Board;
-import flash.events.KeyboardEvent;
-import flash.geom.Point;
-import flash.geom.Rectangle;
+import openfl.events.KeyboardEvent;
+import openfl.geom.Point;
+import openfl.geom.Rectangle;
 using com.github.banthar.upg5.PointUtils;
 
 class Player extends Mobile {

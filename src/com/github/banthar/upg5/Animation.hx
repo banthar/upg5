@@ -5,11 +5,12 @@ class Animation {
 	var keyFrames:Array<Frame>;
 	
 	var frame:Int;
-	
-	public function new(keyFrames) {
-		this.keyFrames = keyFrames;
+
+	var queue:Array<Array<Frame>>;
+
+	public function new() {
 		this.frame = 0;
-		
+		this.queue = [];
 	}
 	
 	public function next():Int {
@@ -22,7 +23,21 @@ class Animation {
 			}
 		}
 		this.frame = 0;
+		if (queue.length > 0) {
+			this.keyFrames = queue.shift();
+		}
 		return this.keyFrames[0].frame;
+	}
+	
+	public function playNext(frames) {
+		this.queue.push(frames);
+	}
+	
+		
+	public function playNow(frames) {
+		this.queue = [];
+		this.keyFrames = frames;
+		this.frame = 0;
 	}
 	
 }
