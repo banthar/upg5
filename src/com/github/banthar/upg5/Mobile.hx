@@ -47,6 +47,9 @@ class Mobile extends Actor {
 						}
 					} else if ( u == 0 ) {
 						this.isSliding = true;
+						if(this.velocity.y > 0) {
+							this.velocity.y *= getFriction();
+						}
 					}
 					return;
 				}
@@ -58,7 +61,7 @@ class Mobile extends Actor {
 		
 	override public function tick(board:Board) {
 		super.tick(board);
-		this.velocity.y += isSliding?0.1:0.2;
+		this.velocity.y += 0.2;
 		hitGround = false;
 		isSliding = false;
 		for(d in 0...2) {
