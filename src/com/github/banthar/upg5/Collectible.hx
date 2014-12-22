@@ -8,7 +8,7 @@ class Collectible extends Actor {
 		this.size = new Point(16, 16);
 	}
 	
-	override function getXY(board:Board) {
+	override function getXy(board:Board) {
 		return new Point(this.position.x, this.position.y + Math.sin(board.frame * 0.1) * 3.0);
 	}
 	

@@ -11,7 +11,7 @@ class Upgrade extends Collectible {
 		this.type = type;
 	}
 	
-	override function getUV(board:Board) {
+	override function getUv(board:Board) {
 		return new Rectangle(0, 48, 16, 16);
 	}
 

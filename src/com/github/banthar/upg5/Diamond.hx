@@ -7,7 +7,7 @@ class Diamond extends Collectible {
 		super(position);
 	}
 
-	override function getUV(board:Board) {
+	override function getUv(board:Board) {
 		return new Rectangle(0, 32, 16, 16);
 	}
 }

@@ -21,7 +21,7 @@ class Player extends Actor {
 		this.frame = 0;
 	}
 	
-	function getFrameId() {
+	override function getFrame(board:Board) {
 		var n = Math.floor(frame / 8);
 		if (this.velocity.x > 0) {
 			return 6 + n%4;
@@ -33,8 +33,8 @@ class Player extends Actor {
 		}
 	}
 	
-	override function getUV(board:Board) {
-		return new Rectangle(0 + getFrameId() * 13, 64, size.x, size.y);
+	override function getTileOffset() {
+		return new Point(0, 64);
 	}
 	
 	public function onKeyDown(keyCode) {

@@ -80,11 +80,23 @@ class Actor {
 		}
 	}
 	
-	public function getUV(board:Board) {
-		return new Rectangle();
+	
+	public function getFrame(board:Board):Int {
+		throw "getFrame() not implemented";
+	}
+
+	public function getTileOffset():Point {
+		throw "getTileOffset() not implemented";
 	}
 	
-	public function getXY(board:Board) {
+	public function getUv(board:Board) {
+		var offset = getTileOffset();
+		var size = this.size;
+		var frame = getFrame(board);
+		return new Rectangle(offset.x + size.x * frame, offset.y, size.x, size.y);
+	}
+	
+	public function getXy(board:Board) {
 		return position;
 	}
 	
