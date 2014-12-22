@@ -38,7 +38,7 @@ class Mobile extends Actor {
 				var p = i + (direction == 1?0:-1);
 				var x = u * j + v * p;
 				var y = u * p + v * j;
-				if (board.get(x, y).isSolid(direction * v, direction * u)) {
+				if (board.get(x, y).interact(direction * v, direction * u, this)) {
 					this.position.set(u, i * stepU - offset);
 					this.velocity.set(u, 0);
 					if ( u == 1 ) {

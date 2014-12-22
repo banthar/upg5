@@ -12,12 +12,15 @@ class Tile {
 		return this.id - 1;
 	}
 	
-	public function isSolid(signX:Float, signY:Float) {
+	public function interact(signX:Float, signY:Float, mobile : Mobile) {
 		switch(this.id) {
 			case 0:
 				return false;
 			case 5:
 				return signX==0 && signY>0;
+			case 69:
+				mobile.destroy();
+				return false;
 			default:
 				return true;
 		}
