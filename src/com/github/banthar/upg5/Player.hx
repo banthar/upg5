@@ -18,23 +18,18 @@ class Player extends Mobile {
 	var frame:Int;
 	
 	var sliding : Bool;
+
+	var view : PlayerView;
 	
 	public function new(position:Point) {
 		super(position);
 		this.size = new Point(13 , 25);
 		this.frame = 0;
+		this.view = new PlayerView();
 	}
 	
 	override function getFrame(board:Board) {
-		var n = Math.floor(frame / 8);
-		if (this.velocity.x > 0) {
-			return 6 + n%4;
-		}
-		else if (this.velocity.x < 0) {
-			return 10 + n%4;
-        } else {
-			return 0;
-		}
+		return this.view.next();
 	}
 	
 	override function getTileOffset() {
@@ -53,7 +48,6 @@ class Player extends Mobile {
 	}
 	
 	function jump() {
-		trace(jumpsLeft);
 		if (jumpsLeft > 0) {
 			jumpsLeft--;
 			this.velocity.y = -5.5;
@@ -68,6 +62,7 @@ class Player extends Mobile {
 			frame++;
 		}
 		super.tick(board);
+		this.view.setVelocity(this.velocity);
 	}
 	
 	public function onKeyUp(keyCode) {
