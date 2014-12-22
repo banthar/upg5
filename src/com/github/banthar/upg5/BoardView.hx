@@ -26,7 +26,7 @@ class BoardView extends Sprite {
 		this.board = board;
 		this.tiles = Assets.getBitmapData("img/tiles.png");
 		this.bitmap = new Bitmap();
-		this.offset = new Point(0, 0);
+		this.offset = this.board.player.getCenter();
 		addChild(this.bitmap);
 	}
 	
@@ -41,16 +41,15 @@ class BoardView extends Sprite {
 		else return 0;
 	}
 	
+	
 	public function tick() {
 		var screenSize = new Point(bitmap.width, bitmap.height);
-		var center = this.board.player.getCenter();
-		var screenCenter = new Point(this.offset.x + screenSize.x / 2, this.offset.y + screenSize.y / 2);
-		
-		if (center.subtract(screenCenter).divide(screenSize).length > 0.5 * 0.8) {
+		var target = this.board.player.getCenter();
+	
+		if (target.subtract(this.offset).divide(screenSize).length > 0.5 * 0.8) {
 			shouldScroll = true;
 		}
 		if (shouldScroll) {
-			var target = center.subtract(screenSize.multiply(0.5));
 			var v = target.subtract(offset);
 			var scrollSpeed = 8.0;
 			if (v.length >= scrollSpeed) {
@@ -69,11 +68,11 @@ class BoardView extends Sprite {
 		var tileSize = this.board.tileSize;
 		var tilePitch = tiles.width / tileSize.x;
 
-		var offsetX = clamp(offset.x, 0, board.width * tileSize.x - bitmapData.width);
+		var offsetX = clamp(offset.x - bitmapData.width / 2, 0, board.width * tileSize.x - bitmapData.width);
 		var left = Math.floor(offsetX / tileSize.x);
 		var right = Math.ceil((offsetX + bitmapData.width) / tileSize.x);
 		
-		var offsetY = clamp(offset.y, 0, board.height * tileSize.y - bitmapData.height);
+		var offsetY = clamp(offset.y - bitmapData.height / 2, 0, board.height * tileSize.y - bitmapData.height);
 		var top = Math.floor(offsetY / tileSize.y);
 		var bottom = Math.ceil((offsetY + bitmapData.height) / tileSize.y);
 		
