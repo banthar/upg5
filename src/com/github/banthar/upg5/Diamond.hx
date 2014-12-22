@@ -1,5 +1,6 @@
 package com.github.banthar.upg5;
-import openfl.geom.Rectangle;
+
+import openfl.geom.*;
 
 class Diamond extends Collectible {
 
@@ -7,7 +8,12 @@ class Diamond extends Collectible {
 		super(position);
 	}
 
-	override function getUv(board:Board) {
-		return new Rectangle(0, 32, 16, 16);
+	override function getFrame(board:Board) {
+		return Math.floor(board.frame / 4) % 4;
 	}
+	
+	override function getTileOffset() {
+		return new Point(0, 32);
+	}
+	
 }
