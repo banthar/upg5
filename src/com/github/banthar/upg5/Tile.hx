@@ -13,13 +13,16 @@ class Tile {
 	}
 	
 	public function interact(signX:Float, signY:Float, mobile : Mobile) {
+		trace(signY);
 		switch(this.id) {
 			case 0:
 				return false;
 			case 5:
 				return signX==0 && signY>0;
 			case 69:
-				mobile.destroy();
+				if (signY > 0) {
+					mobile.destroy();	
+				}
 				return false;
 			default:
 				return true;
