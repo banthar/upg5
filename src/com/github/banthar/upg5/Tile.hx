@@ -20,10 +20,11 @@ class Tile {
 				return signX==0 && signY>0;
 			case 69:
 				if (signY > 0) {
-					mobile.destroy();	
+					mobile.die();	
 				}
 				return false;
 			case 70:
+				mobile.die();
 				return false;
 			default:
 				return true;

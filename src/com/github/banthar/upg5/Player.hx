@@ -48,15 +48,17 @@ class Player extends Mobile {
 	}
 	
 	function jump() {
-		if (jumpsLeft > 0) {
+		if (jumpsLeft > 0 && !dead) {
 			jumpsLeft--;
 			this.velocity.y = -5.5;
 		}
 	}
 	
 	override function tick(board:Board) {
-		var v = (leftPressed?-1.0:0.0) + (rightPressed?1.0:0.0);
+		var v = (leftPressed? -1.0:0.0) + (rightPressed?1.0:0.0);	
+		if (dead) v = 0;
 		this.velocity.x = v * 1.5;
+			
 		if (this.hitGround) {
 			jumpsLeft = jumpLevel;
 			frame++;

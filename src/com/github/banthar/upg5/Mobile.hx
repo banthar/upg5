@@ -11,6 +11,8 @@ class Mobile extends Actor {
 
 	var isSliding:Bool;
 
+	var dead:Bool = false;
+	
 	public function new(position:Point) {
 		super(position);
 		this.velocity = new Point();
@@ -58,7 +60,10 @@ class Mobile extends Actor {
 		}
 		this.position.set(u, this.position.get(u) + this.velocity.get(u));
 	}
-		
+	public function die() {
+		dead = true;
+	}
+	
 	override public function tick(board:Board) {
 		super.tick(board);
 		this.velocity.y += 0.2;
