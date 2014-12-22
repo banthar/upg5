@@ -13,7 +13,7 @@ class Tile {
 	}
 	
 	public function interact(signX:Float, signY:Float, mobile : Mobile) {
-		trace(signY);
+		trace(this.id);
 		switch(this.id) {
 			case 0:
 				return false;
