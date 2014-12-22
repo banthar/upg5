@@ -48,8 +48,8 @@ class PlayerView {
 	}
 
 	public function setVelocity(newVelocity:Point) {
-		if (this.velocity.y == 0.0) {
-			if(velocity.x * newVelocity.x <= 0.0) {
+		if (newVelocity.y == 0.0) {
+			if(this.velocity.x * newVelocity.x <= 0.0 || this.velocity.y != 0.0) {
 				if (newVelocity.x > 0) {
 					this.animation.playNow(TURN_RIGHT);
 					this.animation.playNext(WALK_RIGHT);
