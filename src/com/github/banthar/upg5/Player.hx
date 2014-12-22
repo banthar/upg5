@@ -7,12 +7,15 @@ using com.github.banthar.upg5.PointUtils;
 
 class Player extends Actor {
 
+	var jumpLevel:Int = 1;
+	
 	var leftPressed:Bool;
 
 	var rightPressed:Bool;
 	
 	var jumpPressed:Bool;
-
+	var jumpsLeft:Int;
+	
 	var frame:Int;
 	
 	public function new(position:Point) {
@@ -49,8 +52,9 @@ class Player extends Actor {
 	}
 	
 	function jump() {
-		if (hitGround && !jumpPressed) {
+		if (!jumpPressed && jumpsLeft > 0) {
 			jumpPressed = true;
+			jumpsLeft--;
 			this.velocity.y = -5.5;
 		}
 	}
@@ -58,7 +62,8 @@ class Player extends Actor {
 	override function tick(board:Board) {
 		var v = (leftPressed?-1.0:0.0) + (rightPressed?1.0:0.0);
 		this.velocity.x = v * 1.5;
-		if(this.hitGround) {
+		if (this.hitGround) {
+			jumpsLeft = jumpLevel;
 			frame++;
 		}
 		super.tick(board);
