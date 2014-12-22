@@ -15,22 +15,14 @@ class Mobile extends Actor {
 		super(position);
 		this.velocity = new Point();
 	}
-	
-	function sign(x:Float) {
-		if (x >= 0) {
-			return 1;
-		} else {
-			return -1;
-		}
-	}
-	
+
 	public function move(board:Board, u:Int) {
 		var v = 1 - u;
 		var stepU = board.tileSize.get(u);
 		var stepV = board.tileSize.get(v);
 
 		var velocity = this.velocity.get(u) / stepU;
-		var direction = sign(velocity);
+		var direction = Utils.normalize(velocity);
 		var offset = direction > 0 ? this.size.get(u) : 0.0;
 		var position = (this.position.get(u) + offset) / stepU;
 		

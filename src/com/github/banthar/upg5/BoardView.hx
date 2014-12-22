@@ -35,13 +35,6 @@ class BoardView extends Sprite {
 		paint();
 	}
 	
-	function sign(n : Float) {
-		if (n > 0) return 1;
-		if (n < 0) return -1
-		else return 0;
-	}
-	
-	
 	public function tick() {
 		var screenSize = new Point(bitmap.width, bitmap.height);
 		var target = this.board.player.getCenter();
