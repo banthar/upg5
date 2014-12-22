@@ -3,20 +3,16 @@ package com.github.banthar.upg5;
 using com.github.banthar.upg5.PointUtils;
 import openfl.geom.Point;
 
-/**
- * ...
- * @author Michael
- */
 class Mobile extends Actor {
 
 	public var velocity:Point;
 
 	var hitGround:Bool;
+
 	var isSliding:Bool;
-	
+
 	public function new(position:Point) {
 		super(position);
-		
 		this.velocity = new Point();
 	}
 	
@@ -53,8 +49,12 @@ class Mobile extends Actor {
 				if (board.get(x, y).isSolid(direction * v, direction * u)) {
 					this.position.set(u, i * stepU - offset);
 					this.velocity.set(u, 0);
-					if( u == 1 && direction == 1 ) {
-						this.hitGround = true;
+					if ( u == 1 ) {
+						if(direction == 1) {
+							this.hitGround = true;
+						}
+					} else if ( u == 0 ) {
+						this.isSliding = true;
 					}
 					return;
 				}
@@ -68,8 +68,13 @@ class Mobile extends Actor {
 		super.tick(board);
 		this.velocity.y += isSliding?0.1:0.2;
 		hitGround = false;
+		isSliding = false;
 		for(d in 0...2) {
 			this.move(board, d);
 		}
+	}
+	
+	public function getFriction() {
+		return 0.5;
 	}
 }
