@@ -13,9 +13,14 @@ class Collectible extends Actor {
 	}
 	
 	override function tick(board:Board) {
-		if (this.getBounds().intersects(board.player.getBounds())) {
-			trace("collected: " + this);
+		var player = board.player;
+		if (this.getBounds().intersects(player.getBounds())) {
+			collect(player);
 			destroy();
 		}
+	}
+	
+	function collect(player:Player) {
+		throw "collect() not implemented";
 	}
 }

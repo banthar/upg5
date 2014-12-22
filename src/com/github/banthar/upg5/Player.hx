@@ -1,5 +1,6 @@
 package com.github.banthar.upg5;
 import com.github.banthar.upg5.Board;
+import haxe.ds.StringMap;
 import openfl.events.KeyboardEvent;
 import openfl.geom.Point;
 import openfl.geom.Rectangle;
@@ -17,15 +18,18 @@ class Player extends Mobile {
 	
 	var frame:Int;
 	
-	var sliding : Bool;
+	var sliding:Bool;
 
-	var view : PlayerView;
+	var view:PlayerView;
+	
+	var upgrades:StringMap<Bool>;
 	
 	public function new(position:Point) {
 		super(position);
 		this.size = new Point(13 , 25);
 		this.frame = 0;
 		this.view = new PlayerView();
+		this.upgrades = new StringMap();
 	}
 	
 	override function getFrame(board:Board) {
@@ -77,5 +81,9 @@ class Player extends Mobile {
 	public function getCenter() {
 		return this.position.add(this.size.multiply(0.5));
 	}
-	
+
+	public function addUpgrade(type) {
+		this.upgrades.set(type, true);
+	}
+
 }

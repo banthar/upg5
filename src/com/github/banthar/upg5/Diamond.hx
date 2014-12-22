@@ -40,4 +40,8 @@ class Diamond extends Collectible {
 		return new Point(0, 32);
 	}
 	
+	override function collect(player:Player) {
+		trace("Diamond!");
+	}
+	
 }

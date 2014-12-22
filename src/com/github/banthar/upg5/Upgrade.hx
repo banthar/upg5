@@ -18,4 +18,9 @@ class Upgrade extends Collectible {
 	override function getTileOffset() {
 		return new Point(0, 48);
 	}
+	
+	override function collect(player:Player) {
+		player.addUpgrade(type);
+	}
+	
 }
