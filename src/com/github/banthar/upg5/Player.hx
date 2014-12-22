@@ -10,7 +10,7 @@ class Player extends Actor {
 	var leftPressed:Bool;
 
 	var rightPressed:Bool;
-
+	
 	var jumpPressed:Bool;
 
 	var frame:Int;
@@ -41,10 +41,17 @@ class Player extends Actor {
 		switch(keyCode) {
 			case 37,65:
 				leftPressed = true;
-			case 38,87:
-				jumpPressed = true;
+			case 38, 87:
+				jump();
 			case 39,68:
 				rightPressed = true;
+		}
+	}
+	
+	function jump() {
+		if (hitGround && !jumpPressed) {
+			jumpPressed = true;
+			this.velocity.y = -5.5;
 		}
 	}
 	
@@ -53,9 +60,6 @@ class Player extends Actor {
 		this.velocity.x = v * 1.5;
 		if(this.hitGround) {
 			frame++;
-		}
-		if (jumpPressed && hitGround) {
-			this.velocity.y = -5.5;
 		}
 		super.tick(board);
 	}
